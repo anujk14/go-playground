@@ -1,6 +1,14 @@
 package main
 
-import "net/http"
+import (
+	"encoding/json"
+	"net/http"
+)
+
+type HelloResponse struct {
+	Name     string
+	Greeting string
+}
 
 func rootHandler(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-type", "application/json")
@@ -16,8 +24,24 @@ func rootHandler(w http.ResponseWriter, req *http.Request) {
 }
 
 func helloHandler(w http.ResponseWriter, req *http.Request) {
-	res := []byte("Hello there!")
-	_, err := w.Write(res)
+	name := req.Header.Get("name")
+	if name == "" {
+		name = "Random dude"
+	}
+
+	greeting := "Hello!"
+
+	// res := []byte("Hello there!")
+	// _, err := w.Write(res)
+
+	h := HelloResponse{
+		Name:     name,
+		Greeting: greeting,
+	}
+
+	w.Header().Set("content-type", "application/json")
+
+	err := json.NewEncoder(w).Encode(h)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
