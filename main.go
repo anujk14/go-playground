@@ -7,14 +7,13 @@ import (
 )
 
 func main() {
-	// Simple http handler code is below. This uses DefaultServeMux as the multiplexer. It does not support advanced routing
-	// http.HandleFunc("/", rootHandler)
-	// http.HandleFunc("/hello", helloHandler)
-
-	// http.ListenAndServe(":8080", nil)
+	logger := getLogger()
 
 	r := mux.NewRouter()
-	r.HandleFunc("/", rootHandler)
+	r.HandleFunc("/", rootHandler(logger))
 	r.HandleFunc("/hello", helloHandler).Methods(http.MethodPost)
+
+	logger.Debug("Starting server.......")
+
 	http.ListenAndServe(":9091", r)
 }
