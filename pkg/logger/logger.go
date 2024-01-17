@@ -1,4 +1,4 @@
-package main
+package logger
 
 import (
 	"log/slog"
@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func getLogger() *slog.Logger {
+func GetLogger() *slog.Logger {
 	logHandler := slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
 		AddSource: true,
 		Level:     slog.LevelDebug,
