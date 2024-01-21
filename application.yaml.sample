@@ -1,0 +1,1 @@
+database_url: "postgres://anuj:@localhost:5432/go-playground-db?sslmode=disable"
